@@ -64,6 +64,16 @@ module Enumerable
     self.my_each_with_index { |_v, i| new_arr[i] = (yield self[i])}
     new_arr
   end
+
+  def my_inject
+    acc = 1
+    self.each { |v| acc = yield acc, v}
+    acc
+  end
+end
+
+def multiply_els(input)
+  input.my_inject { |acc, v| acc * v}
 end
 
 puts 'my_each vs. each'
@@ -107,3 +117,8 @@ puts 'my_map'
 puts (numbers.my_map { |i| i * i})
 puts 'map'
 puts (numbers.map { |i| i * i})
+puts 'my_inject'
+puts (numbers.my_inject { |acc, v| acc *= v; acc })
+puts 'inject'
+puts (numbers.inject { |acc, v| acc *= v; acc })
+puts multiply_els([2, 5, 6, 3])
