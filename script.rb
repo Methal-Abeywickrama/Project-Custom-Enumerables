@@ -52,6 +52,12 @@ module Enumerable
     end
     true
   end
+
+  def my_count
+    count = 0
+    self.my_each_with_index { |_v, i| count += 1 if yield self[i] }
+    count
+  end
 end
 
 puts 'my_each vs. each'
@@ -87,3 +93,7 @@ puts 'my_none'
 puts (odd_numbers.my_none? { |i| i.even?})
 puts 'none'
 puts (odd_numbers.none? { |i| i.even?})
+puts 'my_count'
+puts (numbers.my_count {|i| i.even?})
+puts 'count'
+puts (numbers.count {|i| i.even?})
