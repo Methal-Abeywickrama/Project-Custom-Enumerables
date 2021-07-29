@@ -41,11 +41,24 @@ module Enumerable
 
     true
   end
+
+  def my_none?
+    i = 0
+    while i < length
+      state = yield self[i]
+      return false if state == true
+
+      i += 1
+    end
+    true
+  end
 end
 
 puts 'my_each vs. each'
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-other_numbers = [2, 4, 6, 8]
+even_numbers = [2, 4, 6, 8]
+odd_numbers = [1, 3, 5, 7]
+
 puts 'my_each'
 numbers.my_each { |item| puts item * 5 }
 puts 'each'
@@ -63,6 +76,14 @@ puts (numbers.my_all? { |i| i.even?})
 puts 'all'
 puts (numbers.all? { |i| i.even?})
 puts 'my_all'
-puts (other_numbers.my_all? { |i| i.even?})
+puts (even_numbers.my_all? { |i| i.even?})
 puts 'all'
-puts (other_numbers.all? { |i| i.even?})
+puts (even_numbers.all? { |i| i.even?})
+puts 'my_none'
+puts (numbers.my_none? { |i| i.even?})
+puts 'none'
+puts (numbers.none? { |i| i.even?})
+puts 'my_none'
+puts (odd_numbers.my_none? { |i| i.even?})
+puts 'none'
+puts (odd_numbers.none? { |i| i.even?})
