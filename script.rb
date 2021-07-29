@@ -58,6 +58,12 @@ module Enumerable
     self.my_each_with_index { |_v, i| count += 1 if yield self[i] }
     count
   end
+
+  def my_map
+    new_arr = self.clone
+    self.my_each_with_index { |_v, i| new_arr[i] = (yield self[i])}
+    new_arr
+  end
 end
 
 puts 'my_each vs. each'
@@ -94,6 +100,10 @@ puts (odd_numbers.my_none? { |i| i.even?})
 puts 'none'
 puts (odd_numbers.none? { |i| i.even?})
 puts 'my_count'
-puts (numbers.my_count {|i| i.even?})
+puts (numbers.my_count { |i| i.even?})
 puts 'count'
-puts (numbers.count {|i| i.even?})
+puts (numbers.count { |i| i.even?})
+puts 'my_map'
+puts (numbers.my_map { |i| i * i})
+puts 'map'
+puts (numbers.map { |i| i * i})
