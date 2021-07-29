@@ -61,7 +61,7 @@ module Enumerable
 
   def my_map
     new_arr = self.clone
-    self.my_each_with_index { |_v, i| new_arr[i] = (yield self[i])}
+    self.my_each_with_index { |_v, i| new_arr[i] = (proc.call self[i])}
     new_arr
   end
 
@@ -80,6 +80,7 @@ puts 'my_each vs. each'
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 even_numbers = [2, 4, 6, 8]
 odd_numbers = [1, 3, 5, 7]
+my_proc = Proc.new { |i| i * i}
 
 puts 'my_each'
 numbers.my_each { |item| puts item * 5 }
@@ -122,3 +123,7 @@ puts (numbers.my_inject { |acc, v| acc *= v; acc })
 puts 'inject'
 puts (numbers.inject { |acc, v| acc *= v; acc })
 puts multiply_els([2, 5, 6, 3])
+puts 'map'
+puts (numbers.map(&my_proc) )
+puts 'my_map'
+puts (numbers.my_map(&my_proc) )
